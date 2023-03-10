@@ -1,13 +1,10 @@
 package org.datagen;
 
 
-import org.datagen.generator.PassportGenerator;
-import org.datagen.generator.SnilsGenerator;
-import org.datagen.netology.Product;
+
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
+
 
 
 public class Main {
@@ -17,10 +14,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        Product product = new Product("test",100,100);
-        Product[] basket = new Product[2];
-        Arrays.fill(basket,product);
-        Product[] products = Arrays.copyOf(basket, 3);
-        System.out.println(Arrays.toString(products));
+
     }
 }
