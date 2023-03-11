@@ -1,5 +1,6 @@
 package org.datagen.generator;
 
+import org.datagen.enitiy.Inn;
 import org.datagen.io.Reader;
 
 import java.io.IOException;
@@ -13,9 +14,10 @@ public class InnGenerator {
     private static List<Integer> list1 = List.of(7,2,4,10,3,5,9,4,6,8);
     private static List<Integer> list2 = List.of(3,7,2,4,10,3,5,9,4,6,8);
 
-    public String generate(){
+    public Inn generate(){
+
         try {
-            return generateInnWithControllSum();
+            return new Inn(generateInnWithControllSum());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -68,10 +70,4 @@ public class InnGenerator {
         return digest % 11 % 10;
     }
 
-    public static void main(String[] args) {
-        InnGenerator innGenerator = new InnGenerator();
-        System.out.println(innGenerator.generate());
-        System.out.println(innGenerator.generate());
-        System.out.println(innGenerator.generate());
-    }
 }

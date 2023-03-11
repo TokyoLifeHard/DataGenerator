@@ -5,7 +5,7 @@ import org.datagen.enitiy.Snils;
 import java.util.ArrayList;
 import java.util.Random;
 
-// TODO: 20.12.2022 calculateControllSum - решить проблему с дефисом перед котрольным числом
+
 public class SnilsGenerator {
     public Snils  generate(){
         Random random = new Random();
@@ -23,8 +23,7 @@ public class SnilsGenerator {
         return snils;
     }
 
-    // TODO: 21.12.2022 Починить
-    //Тут сломается из-за дефиса перед котрольным числом
+
     private int calculateControllSum(StringBuilder sb){
         String[] nums = sb.toString().split("-");
         ArrayList<Integer> digests = new ArrayList<>(9);
@@ -55,8 +54,4 @@ public class SnilsGenerator {
                 .getAsInt();
     }
 
-    public static void main(String[] args) {
-        SnilsGenerator snilsGenerator = new SnilsGenerator();
-        System.out.println(snilsGenerator.generate());
-    }
 }

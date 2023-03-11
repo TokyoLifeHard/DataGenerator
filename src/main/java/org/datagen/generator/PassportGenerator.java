@@ -163,10 +163,4 @@ public class PassportGenerator {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        PassportGenerator passportGenerator = new PassportGenerator();
-        Passport passport = passportGenerator.generate();
-        System.out.println(passport.toString());
-
-    }
 }

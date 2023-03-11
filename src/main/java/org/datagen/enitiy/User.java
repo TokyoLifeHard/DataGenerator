@@ -5,18 +5,17 @@ import java.util.UUID;
 
 public class User {
     private UUID uuid;
-
-
     private Passport passport;
     private Snils snils;
-    private String sex;
+    private Inn inn;
     public User() {
     }
 
-    public User(Passport passport, Snils snils, String sex) {
+    public User(Passport passport, Snils snils,Inn inn) {
+        this.uuid = UUID.randomUUID();
         this.passport = passport;
         this.snils = snils;
-        this.sex = sex;
+        this.inn = inn;
     }
 
 
@@ -36,12 +35,12 @@ public class User {
         this.snils = snils;
     }
 
-    public String getSex() {
-        return sex;
+    public Inn getInn() {
+        return inn;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setInn(Inn inn) {
+        this.inn = inn;
     }
 
     @Override
@@ -57,5 +56,15 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(uuid, passport, snils);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uuid=" + uuid +
+                ", passport=" + passport +
+                ", snils=" + snils +
+                ", inn=" + inn +
+                '}';
     }
 }

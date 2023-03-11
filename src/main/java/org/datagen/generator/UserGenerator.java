@@ -1,28 +1,37 @@
 package org.datagen.generator;
 
+import org.datagen.enitiy.Inn;
 import org.datagen.enitiy.Passport;
 import org.datagen.enitiy.Snils;
 import org.datagen.enitiy.User;
 import org.datagen.io.Reader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class UserGenerator {
-    SnilsGenerator snilsGenerator;
-    InnGenerator innGenerator;
-    PassportGenerator passportGenerator;
+    private static final SnilsGenerator snilsGenerator;
+    private static final InnGenerator innGenerator;
+    private static final PassportGenerator passportGenerator;
 
-    public User generateUser(){
+    static {
+        snilsGenerator = new SnilsGenerator();
+        innGenerator = new InnGenerator();
+        passportGenerator = new PassportGenerator();
+    }
 
-        return new User();
+    public User generateUser() throws IOException {
+        return new User(generatePassport(),generateSnils(),generateInn());
     }
     private Snils generateSnils(){
-        return this.snilsGenerator.generate();
+        return snilsGenerator.generate();
     }
-    private Passport generatePassport(){
-        return new Passport();
+    private Passport generatePassport() throws IOException {
+        return passportGenerator.generate();
     }
-
+    private Inn generateInn(){
+        return innGenerator.generate();
+    }
 
 }
