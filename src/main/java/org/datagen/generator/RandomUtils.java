@@ -7,7 +7,7 @@ public class RandomUtils {
     public static int radmonInts(int min,int max){
 
         if (min > max){
-            throw new IllegalArgumentException("sosi hui");
+            throw new IllegalArgumentException("Agr err");
         }
         return r.ints(min, max).findFirst().getAsInt();
     }
