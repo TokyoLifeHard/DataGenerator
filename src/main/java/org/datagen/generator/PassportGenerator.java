@@ -51,6 +51,7 @@ public class PassportGenerator {
                 .secoundName(READER.getRandomFio(Path.of(MALE_LAST_NAME)))
                 .patronymic(READER.getRandomFio(Path.of(MALE_PATRONYMIC)))
                 .birthDate(birthDate)
+                .whomIssued(whomIssued())
                 .dateIssued(caluclateDateIssued(birthDate))
                 .placeLiving("Москва")
                 .seria(generateSeria(birthDate,genearteOkatoNum()))
@@ -60,27 +61,19 @@ public class PassportGenerator {
     }
 
     private String caluclateDateIssued(String birthDate){
-
-        StringBuilder dateIssued = new StringBuilder();
-
-        int dayOfTheMonth = Integer.parseInt(birthDate.split("-")[2]);
-        int monthNumber = Integer.parseInt(birthDate.split("-")[1]);
-
-        if(monthNumber == 2){
-
+        int year = 0;
+        LocalDate date = LocalDate.parse(birthDate);
+        if (!isUpperThan(birthDate,20)){
+           year = caclulateYearIssued(birthDate,14);
+        }else if (isUpperThan(birthDate,20) && !isUpperThan(birthDate,45)){
+            year = caclulateYearIssued(birthDate,20);
+        } else if (isUpperThan(birthDate,45)) {
+            year = caclulateYearIssued(birthDate,45);
         }
-
-        dayOfTheMonth += RandomUtils.radmonInts(1,5);
-        monthNumber += RandomUtils.radmonInts(1,3);
-
-        if (isUpper14andYounger20(birthDate)){
-           dateIssued.append(caclulateYearIssued(birthDate,14)) ;
-        }else if (isUpper20(birthDate) && !isUpper45(birthDate)){
-            dateIssued.append(caclulateYearIssued(birthDate,20));
-        } else if (isUpper45(birthDate)) {
-            dateIssued.append(caclulateYearIssued(birthDate,45));
+        if (date.getMonth().getValue() == 12){
+            return LocalDate.of(year+1,1,(date.getDayOfMonth()/2)+1).toString();
         }
-        return dateIssued.append("-").append(monthNumber).append("-").append(dayOfTheMonth).toString();
+        return LocalDate.of(year,date.getMonth().getValue()+1,(date.getDayOfMonth()/2)+1).toString();
     }
     private int caclulateYearIssued(String birthDate,int ageIssued){
         String birthYear = birthDate.split("-")[0];
@@ -121,33 +114,19 @@ public class PassportGenerator {
         String[] okato = READER.getRandomLine(Path.of(OKATO));
         return  whomIssued.append("УФМС России по гор ").append(okato[2]).append(" ").append(okato[1]).toString();
     }
-    private boolean isUpper20(String birthDate){
+    private boolean isUpperThan(String birthDate, int age){
 
-        boolean isFullYearsMore20 = LocalDate.now().getYear() - Integer.parseInt(birthDate.split("-")[2]) > 20;
-        boolean isCurrentMonthMoreBirthdate = LocalDate.now().getMonth().getValue() <= Integer.parseInt(birthDate.split("-")[1]);
-        boolean isCurrentDayMoreBirthdate = LocalDate.now().getDayOfMonth() <= Integer.parseInt(birthDate.split("-")[0]);
+        LocalDate birthD = LocalDate.parse(birthDate);
+        LocalDate today = LocalDate.now();
+        if (today.getYear() - birthD.getYear()<age) {
+            if (today.getMonth().getValue() - birthD.getMonth().getValue()<=0){
+                if (today.getDayOfMonth() - birthD.getDayOfMonth()<=0){
+                    return true;
+                }
+            }
+        }
 
-        return isFullYearsMore20 && isCurrentMonthMoreBirthdate && isCurrentDayMoreBirthdate;
-    }
-
-    private boolean isUpper14(String birthDate){
-
-        boolean isFullYearsMore14 = LocalDate.now().getYear() - Integer.parseInt(birthDate.split("-")[2]) > 14;
-        boolean isCurrentMonthMoreBirthdate = LocalDate.now().getMonth().getValue() <= Integer.parseInt(birthDate.split("-")[1]);
-        boolean isCurrentDayMoreBirthdate = LocalDate.now().getDayOfMonth() <= Integer.parseInt(birthDate.split("-")[0]);
-
-        return isFullYearsMore14 && isCurrentMonthMoreBirthdate && isCurrentDayMoreBirthdate;
-    }
-    private boolean isUpper14andYounger20(String birthDate){
-        return isUpper14(birthDate) && !isUpper20(birthDate);
-    }
-    private boolean isUpper45(String birthDate){
-
-        boolean isFullYearsMore45 = LocalDate.now().getYear() - Integer.parseInt(birthDate.split("-")[2]) > 45;
-        boolean isCurrentMonthMoreBirthdate = LocalDate.now().getMonth().getValue() <= Integer.parseInt(birthDate.split("-")[1]);
-        boolean isCurrentDayMoreBirthdate = LocalDate.now().getDayOfMonth() <= Integer.parseInt(birthDate.split("-")[0]);
-
-        return isFullYearsMore45 && isCurrentMonthMoreBirthdate && isCurrentDayMoreBirthdate;
+        return false;
     }
 
     private char generateSex(){

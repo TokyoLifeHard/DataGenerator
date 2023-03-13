@@ -16,7 +16,6 @@ public class UserDatapoolGenerator {
 
     public void genearteUser() throws IOException {
         User user = this.userGenerator.generateUser();
-        System.out.println(user.toString());
         this.writer.writeUser(user);
     }
 
