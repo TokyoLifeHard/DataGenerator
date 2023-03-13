@@ -84,7 +84,6 @@ public class PassportGenerator {
     }
     private int caclulateYearIssued(String birthDate,int ageIssued){
         String birthYear = birthDate.split("-")[0];
-        System.out.println(birthYear);
         int years = LocalDate.now().getYear() - Integer.parseInt(birthYear);
         return LocalDate.now().getYear() - Math.abs(years - ageIssued);
     }
@@ -98,9 +97,7 @@ public class PassportGenerator {
 
     private String generateSeria(String birthDate, String okatoData){
         String yearBirth = birthDate.split("-")[0];
-        System.out.println(yearBirth);
         int last2DigestOfYearBirth = Integer.parseInt(yearBirth.substring(2));
-        System.out.println(last2DigestOfYearBirth);
         String okatoNum = okatoData.split(",")[0];
         return new StringBuilder()
                 .append(okatoNum)
